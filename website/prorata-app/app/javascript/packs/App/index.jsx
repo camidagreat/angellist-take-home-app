@@ -32,6 +32,11 @@ const App = () => {
     setInputsState([...inputsState, { ...defaultInputsState, index }])
   }
 
+  const removeGroup = (index) => {
+    const filteredInputGroups = inputsState.filter((group) => group.index !== index)
+    setInputsState(filteredInputGroups)
+  }
+
   const reconcileInvestors = async () => {
     setLoading(true)
     await axios.post('/allocations/reconcile', {
@@ -39,76 +44,81 @@ const App = () => {
       investor_data: inputsState
     }).then((res) => {
       setLoading(false)
-      console.log('res', res)
       setResults(res.data)
     }).catch((err) => {
-      console.log('err', err)
+      console.error('err', err)
     })
   }
 
   const orderedInputGroups = inputsState.sort((a, b) => a.index - b.index)
 
   return (
-    <Grid container justify='center' alignItems='center' spacing={3}>
-      <Grid item xs={6}>
-        <Typography variant='h4' gutterBottom>Investors ({inputsState?.length})</Typography>
-        <Card className={clsx(classes.card, classes.cardBackground)}>
-          <Box mt={6} mx={2}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Box>
-                  <Typography variant='h6' gutterBottom>Total Available Allocation</Typography>
-                  <TextField
-                    placeholder='Allocation'
-                    name='amount'
-                    type='number'
-                    variant='outlined'
-                    size='small'
-                    fullWidth
-                    onChange={(e) => setAllocationAmount(e.target.value)}
-                    InputProps={{
-                      startAdornment:
-                        <AttachMoneyIcon />
-                    }}
-                  />
-                </Box>
-              </Grid>
-              <Box mt={3} mb={-1} ml={1.5}>
-                <Typography variant='h6'>Investor Amounts</Typography>
-              </Box>
-              {orderedInputGroups.map((inputGroup) => {
-                return (
-                  <InputsGroup key={inputGroup.index} state={inputGroup} updateInputGroup={updateInputGroup} />
-                )
-              })}
-              <Grid item xs={12}>
-                <Grid container spacing={2} justify='space-between' alignItems='center'>
-                  <Grid item>
-                    <IconButton color='primary' onClick={addNewInputGroup}>
-                      <AddIcon />
-                    </IconButton>
-                  </Grid>
-                  <Grid item>
-                    <Button
+    <Box mt={6}>
+      <Grid container justify='center' alignItems='center' spacing={3}>
+        <Grid item xs={6}>
+          <Typography variant='h4' gutterBottom>Investors ({inputsState?.length})</Typography>
+          <Card className={clsx(classes.card, classes.cardBackground)}>
+            <Box mt={6} mx={2}>
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <Box>
+                    <Typography variant='h6' gutterBottom>Total Available Allocation</Typography>
+                    <TextField
+                      placeholder='Allocation'
+                      name='amount'
+                      type='number'
                       variant='outlined'
-                      color='primary'
-                      onClick={reconcileInvestors}
-                      className={classes.submitButton}
-                    >{loading ? <CircularProgress color='primary' /> : 'Submit'}</Button>
+                      size='small'
+                      fullWidth
+                      onChange={(e) => setAllocationAmount(e.target.value)}
+                      InputProps={{
+                        startAdornment:
+                          <AttachMoneyIcon />
+                      }}
+                    />
+                  </Box>
+                </Grid>
+                <Box mt={3} mb={-1} ml={1.5}>
+                  <Typography variant='h6'>Investor Amounts</Typography>
+                </Box>
+                {orderedInputGroups.map((inputGroup) => {
+                  return (
+                    <InputsGroup
+                      key={inputGroup.index}
+                      state={inputGroup}
+                      updateInputGroup={updateInputGroup}
+                      removeGroup={() => removeGroup(inputGroup.index)} />
+                  )
+                })}
+                <Grid item xs={12}>
+                  <Grid container spacing={2} justify='space-between' alignItems='center'>
+                    <Grid item>
+                      <IconButton color='primary' onClick={addNewInputGroup}>
+                        <AddIcon />
+                      </IconButton>
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        variant='outlined'
+                        color='primary'
+                        onClick={reconcileInvestors}
+                        className={classes.submitButton}
+                      >{loading ? <CircularProgress color='primary' /> : 'Submit'}</Button>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-          </Box>
-        </Card>
+            </Box>
+          </Card>
+        </Grid>
+        <Grid item={3} xs={3}>
+          <Typography variant='h4' gutterBottom>Results</Typography>
+          <Card className={clsx(classes.card, classes.cardBackgroundLight)}>
+            <Results results={results} />
+          </Card>
+        </Grid>
       </Grid>
-      <Grid item={3} xs={3}>
-        <Typography variant='h4' gutterBottom>Results</Typography>
-        <Card className={clsx(classes.card, classes.cardBackgroundLight)}>
-          <Results results={results} />
-        </Card>
-      </Grid>
-    </Grid>
+    </Box>
   )
 }
 
