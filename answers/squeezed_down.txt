@@ -12,3 +12,16 @@ this could potentially happen less often?
 
 Response
 ~~~~~~~~
+
+"We very much appreciate your business and are very sorry for any confusion our pro rata
+allocation is causing. We are very diligent about tracking a historical record of investments
+made by each investor. This informs the limits we enforce on how much each person can invest.
+The investment you're referring to saw an incredible amount of interest with a lot of investors
+that typically invest between XXXX and XXXXX. Base on the interest we saw, we had to squeeze
+all investors down from what they were hoping to invest. We will be sure to be transparent
+about this process in the future."
+
+Without changing supply/demand, there isn't a whole lot to be done. You could only allow
+investors to see certain deals based on perceived interest. That feels a bit slimy though.
+Having a historical record of investments made (kind of like a book of credit) could help
+inform who should be allowed to invest and how much they can invest.

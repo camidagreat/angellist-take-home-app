@@ -9,3 +9,12 @@ issue and how would you communicate this to the affected customers.
 
 Response
 ~~~~~~~~
+
+I would first make sure to apologize with the force of 100 CSMs.
+Then I would make sure to track down the bug that caused the error
+and correct it. Then, depending on the valuation change of the companies
+that got the investments and other business changes, I assume we would
+need to reconcile any wrongly appreciated/depreciated investments to
+the value they would have been with the correct investment amounts.
+The mess-up from two weeks ago would go through the same process but
+is much less likely to need a lot of financial reparations.
